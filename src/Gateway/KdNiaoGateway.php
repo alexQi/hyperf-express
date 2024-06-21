@@ -7,6 +7,7 @@ namespace AlexQiu\Express\Gateway;
 use AlexQiu\Express\Exception\GatewayErrorException;
 use AlexQiu\Express\Exception\InvalidArgumentException;
 use AlexQiu\Express\HasHttpRequest;
+use Closure;
 use Hyperf\Codec\Json;
 
 /**

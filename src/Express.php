@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 /**
- * 短信服务主要实现类
  *
  * @link     http://www.swoole.red
  * @contact  1712715552@qq.com
@@ -52,19 +51,41 @@ class Express implements ExpressInterface
         $this->config = $config;
     }
 
+    /**
+     * @param            $data
+     * @param array|null $gateway
+     *
+     * @return array|mixed
+     * @throws NoGatewayAvailableException
+     */
     public function track($data, array $gateway = null)
     {
         return $this->getCaller()->track($data, $this->formatGateways($gateway));
     }
 
+    /**
+     * @param $data
+     * @param $gateway
+     *
+     * @return array|mixed
+     * @throws NoGatewayAvailableException
+     */
     public function subscribe($data, $gateway = null)
     {
         return $this->getCaller()->subscribe($data, $this->formatGateways($gateway));
     }
 
-    public function notify($data, $gateway = null)
+    /**
+     * @param         $data
+     * @param Closure $closure
+     * @param         $gateway
+     *
+     * @return array|mixed
+     * @throws NoGatewayAvailableException
+     */
+    public function notify($data, Closure $closure, $gateway = null)
     {
-        return $this->getCaller()->notify($data, $this->formatGateways($gateway));
+        return $this->getCaller()->notify($data, $closure, $this->formatGateways($gateway));
     }
 
     /**

@@ -30,7 +30,7 @@ interface ExpressInterface
      *
      * @return mixed
      */
-    public function notify($data, $gateway = null);
+    public function notify($data, Closure $closure, $gateway = null);
 
     /**
      * 注册自定义驱动程序创建者闭包。

@@ -11,6 +11,9 @@ declare(strict_types=1);
 namespace AlexQiu\Express;
 
 use AlexQiu\Express\Exception\NoGatewayAvailableException;
+use Closure;
+use Exception;
+use Throwable;
 
 class Caller
 {
@@ -40,31 +43,16 @@ class Caller
      */
     public function track($data, $gateway)
     {
-        $results      = [];
-        $isSuccessful = false;
         try {
-            $results[$gateway] = [
-                'gateway' => $gateway,
-                'status'  => self::STATUS_SUCCESS,
-                'result'  => $this->express->gateway($gateway)->track($data),
-            ];
-            $isSuccessful      = true;
-        } catch (\Exception $e) {
-            $results[$gateway] = [
-                'gateway'   => $gateway,
-                'status'    => self::STATUS_FAILURE,
-                'exception' => $e,
-            ];
-        } catch (\Throwable $e) {
-            $results[$gateway] = [
-                'gateway'   => $gateway,
-                'status'    => self::STATUS_FAILURE,
-                'exception' => $e,
-            ];
-        }
-
-        if (!$isSuccessful) {
-            throw new NoGatewayAvailableException($results);
+            $results = $this->express->gateway($gateway)->track($data);
+        } catch (Exception|Throwable $e) {
+            throw new NoGatewayAvailableException(
+                [
+                    'gateway'   => $gateway,
+                    'status'    => self::STATUS_FAILURE,
+                    'exception' => $e->getMessage(),
+                ]
+            );
         }
         return $results;
     }
@@ -78,33 +66,17 @@ class Caller
      */
     public function subscribe($data, $gateway)
     {
-        $results      = [];
-        $isSuccessful = false;
         try {
-            $results[$gateway] = [
-                'gateway' => $gateway,
-                'status'  => self::STATUS_SUCCESS,
-                'result'  => $this->express->gateway($gateway)->subscribe($data),
-            ];
-            $isSuccessful      = true;
-        } catch (\Exception $e) {
-            $results[$gateway] = [
-                'gateway'   => $gateway,
-                'status'    => self::STATUS_FAILURE,
-                'exception' => $e,
-            ];
-        } catch (\Throwable $e) {
-            $results[$gateway] = [
-                'gateway'   => $gateway,
-                'status'    => self::STATUS_FAILURE,
-                'exception' => $e,
-            ];
+            $results = $this->express->gateway($gateway)->subscribe($data);
+        } catch (Exception|Throwable $e) {
+            throw new NoGatewayAvailableException(
+                [
+                    'gateway'   => $gateway,
+                    'status'    => self::STATUS_FAILURE,
+                    'exception' => $e->getMessage(),
+                ]
+            );
         }
-
-        if (!$isSuccessful) {
-            throw new NoGatewayAvailableException($results);
-        }
-        return $results;
     }
 
     /**
@@ -114,34 +86,19 @@ class Caller
      * @return array
      * @throws NoGatewayAvailableException
      */
-    public function notify($data, $gateway)
+    public function notify($data, Closure $closure, $gateway)
     {
-        $results      = [];
-        $isSuccessful = false;
         try {
-            $results[$gateway] = [
-                'gateway' => $gateway,
-                'status'  => self::STATUS_SUCCESS,
-                'result'  => $this->express->gateway($gateway)->notify($data),
-            ];
-            $isSuccessful      = true;
-        } catch (\Exception $e) {
-            $results[$gateway] = [
-                'gateway'   => $gateway,
-                'status'    => self::STATUS_FAILURE,
-                'exception' => $e,
-            ];
-        } catch (\Throwable $e) {
-            $results[$gateway] = [
-                'gateway'   => $gateway,
-                'status'    => self::STATUS_FAILURE,
-                'exception' => $e,
-            ];
+            $results = $this->express->gateway($gateway)->notify($data);
+        } catch (Exception|Throwable $e) {
+            throw new NoGatewayAvailableException(
+                [
+                    'gateway'   => $gateway,
+                    'status'    => self::STATUS_FAILURE,
+                    'exception' => $e->getMessage(),
+                ]
+            );
         }
-
-        if (!$isSuccessful) {
-            throw new NoGatewayAvailableException($results);
-        }
-        return $results;
+        return call_user_func($closure, $results);
     }
 }
