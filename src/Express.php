@@ -58,7 +58,7 @@ class Express implements ExpressInterface
      * @return array|mixed
      * @throws NoGatewayAvailableException
      */
-    public function track($data, array $gateway = null)
+    public function track($data, $gateway = null)
     {
         return $this->getCaller()->track($data, $this->formatGateways($gateway));
     }
