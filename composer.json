@@ -10,12 +10,7 @@
   "description": "",
   "autoload": {
     "psr-4": {
-      "HyperfLibraries\\Sms\\": "src/"
-    }
-  },
-  "autoload-dev": {
-    "psr-4": {
-      "HyperfTest\\": "tests"
+      "AlexQiu\\Express\\": "src/"
     }
   },
   "require": {
