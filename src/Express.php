@@ -144,7 +144,7 @@ class Express implements ExpressInterface
     protected function makeGateway($gateway, $config)
     {
         if (!class_exists($gateway) || !in_array(GatewayInterface::class, \class_implements($gateway))) {
-            throw new InvalidArgumentException(\sprintf('Class "%s" is a invalid sms gateway.', $gateway));
+            throw new InvalidArgumentException(\sprintf('Class "%s" is a invalid express gateway.', $gateway));
         }
         return new $gateway($config);
     }
@@ -189,7 +189,7 @@ class Express implements ExpressInterface
     protected function formatGateways($gateway)
     {
         if (!$gateway) {
-            $gateway = $this->config->get('sms.default.gateway');
+            $gateway = $this->config->get('express.default.gateway');
         }
         if (!$gateway) {
             throw new NoGatewayAvailableException();

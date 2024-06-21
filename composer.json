@@ -1,51 +1,51 @@
 {
-    "name": "alex-qiu/hyperf-sms",
-    "type": "library",
-    "license": "MIT",
-    "keywords": [
-        "php",
-        "hyperf",
-        "sms"
-    ],
-    "description": "",
-    "autoload": {
-        "psr-4": {
-            "HyperfLibraries\\Sms\\": "src/"
-        }
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "HyperfTest\\": "tests"
-        }
-    },
-    "require": {
-        "php": ">=7.3",
-        "ext-swoole": ">=4.4",
-        "hyperf/config": "3.0.*",
-        "hyperf/contract": "3.0.*",
-        "hyperf/di": "3.0.*",
-        "hyperf/guzzle": "3.0.*",
-        "hyperf/utils": "3.0.*",
-        "mockery/mockery": "^1.5",
-        "ext-json": "*"
-    },
-    "require-dev": {
-        "friendsofphp/php-cs-fixer": "^2.14",
-        "phpstan/phpstan": "~0.12",
-        "hyperf/testing": "3.0.*",
-        "swoft/swoole-ide-helper": "dev-master"
-    },
-    "config": {
-        "sort-packages": true
-    },
-    "scripts": {
-        "test": "co-phpunit -c phpunit.xml --colors=always",
-        "analyze": "phpstan analyse --memory-limit 300M -l 0 ./src",
-        "cs-fix": "php-cs-fixer fix $1"
-    },
-    "extra": {
-        "hyperf": {
-            "config": "HyperfLibraries\\Sms\\ConfigProvider"
-        }
+  "name": "alex-qiu/hyperf-express",
+  "type": "library",
+  "license": "MIT",
+  "keywords": [
+    "php",
+    "hyperf",
+    "express"
+  ],
+  "description": "",
+  "autoload": {
+    "psr-4": {
+      "HyperfLibraries\\Sms\\": "src/"
     }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "HyperfTest\\": "tests"
+    }
+  },
+  "require": {
+    "php": ">=7.3",
+    "ext-swoole": ">=4.4",
+    "hyperf/config": "3.0.*",
+    "hyperf/contract": "3.0.*",
+    "hyperf/di": "3.0.*",
+    "hyperf/guzzle": "3.0.*",
+    "hyperf/utils": "3.0.*",
+    "mockery/mockery": "^1.5",
+    "ext-json": "*"
+  },
+  "require-dev": {
+    "friendsofphp/php-cs-fixer": "^2.14",
+    "phpstan/phpstan": "~0.12",
+    "hyperf/testing": "3.0.*",
+    "swoft/swoole-ide-helper": "dev-master"
+  },
+  "config": {
+    "sort-packages": true
+  },
+  "scripts": {
+    "test": "co-phpunit -c phpunit.xml --colors=always",
+    "analyze": "phpstan analyse --memory-limit 300M -l 0 ./src",
+    "cs-fix": "php-cs-fixer fix $1"
+  },
+  "extra": {
+    "hyperf": {
+      "config": "AlexQiu\\Express\\ConfigProvider"
+    }
+  }
 }

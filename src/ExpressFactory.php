@@ -11,7 +11,7 @@ declare(strict_types=1);
 namespace AlexQiu\Express;
 
 use AlexQiu\Express\Contract\ExpressInterface;
-use HyperfLibraries\Sms\Exception\InvalidArgumentException;
+use AlexQiu\Express\Exception\InvalidArgumentException;
 use Psr\Container\ContainerInterface;
 
 class ExpressFactory
