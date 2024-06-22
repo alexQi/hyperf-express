@@ -94,13 +94,18 @@ class KdNiaoGateway extends GatewayAbstract
         );
     }
 
+    /**
+     * @param $data
+     *
+     * @return mixed
+     * @throws GatewayErrorException
+     */
     public function notify($data)
     {
-        // RequestData
-        // PushTime
-        // Count
-        // Data
-
+        if (!$data['Success']) {
+            throw new GatewayErrorException($data['Reason'], 500);
+        }
+        return $data["Data"];
     }
 
     /**
@@ -114,7 +119,7 @@ class KdNiaoGateway extends GatewayAbstract
     public function postMessage($endpoint, $params)
     {
         $result = $this->get(self::ENDPOINT_URL . $endpoint, $params, self::HEADERS);
-        if ($result['Success']) {
+        if (!$result['Success']) {
             throw new GatewayErrorException($result['Reason'], 500, $result);
         }
 
