@@ -6,9 +6,4 @@ declare(strict_types=1);
  * @contact  1712715552@qq.com
  */
 
-namespace AlexQiu\Express\Exception;
-
-class NoGatewayAvailableException extends Exception
-{
-
-}
+require_once dirname(dirname(__FILE__)) . '/vendor/autoload.php';
