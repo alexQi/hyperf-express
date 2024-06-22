@@ -46,13 +46,7 @@ class Caller
         try {
             $results = $this->express->gateway($gateway)->track($data);
         } catch (Exception|Throwable $e) {
-            throw new NoGatewayAvailableException(
-                [
-                    'gateway'   => $gateway,
-                    'status'    => self::STATUS_FAILURE,
-                    'exception' => $e->getMessage(),
-                ]
-            );
+            throw new NoGatewayAvailableException($e->getMessage());
         }
         return $results;
     }
@@ -69,14 +63,9 @@ class Caller
         try {
             $results = $this->express->gateway($gateway)->subscribe($data);
         } catch (Exception|Throwable $e) {
-            throw new NoGatewayAvailableException(
-                [
-                    'gateway'   => $gateway,
-                    'status'    => self::STATUS_FAILURE,
-                    'exception' => $e->getMessage(),
-                ]
-            );
+            throw new NoGatewayAvailableException($e->getMessage());
         }
+        return $results;
     }
 
     /**
@@ -91,13 +80,7 @@ class Caller
         try {
             $results = $this->express->gateway($gateway)->notify($data);
         } catch (Exception|Throwable $e) {
-            throw new NoGatewayAvailableException(
-                [
-                    'gateway'   => $gateway,
-                    'status'    => self::STATUS_FAILURE,
-                    'exception' => $e->getMessage(),
-                ]
-            );
+            throw new NoGatewayAvailableException($e->getMessage());
         }
         return call_user_func($closure, $results);
     }

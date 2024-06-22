@@ -213,7 +213,7 @@ class Express implements ExpressInterface
             $gateway = $this->config->get('express.default.gateway');
         }
         if (!$gateway) {
-            throw new NoGatewayAvailableException();
+            throw new NoGatewayAvailableException("unkonw express gateway");
         }
         return $gateway;
     }
