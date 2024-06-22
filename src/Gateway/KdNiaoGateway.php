@@ -4,10 +4,8 @@ declare(strict_types=1);
 
 namespace AlexQiu\Express\Gateway;
 
-use AlexQiu\Express\Exception\GatewayErrorException;
 use AlexQiu\Express\Exception\InvalidArgumentException;
 use AlexQiu\Express\HasHttpRequest;
-use Closure;
 use Hyperf\Codec\Json;
 
 /**
@@ -62,7 +60,6 @@ class KdNiaoGateway extends GatewayAbstract
      * @param $extend
      *
      * @return array
-     * @throws GatewayErrorException
      * @throws InvalidArgumentException
      */
     public function subscribe($data, $extend = [])
@@ -98,12 +95,12 @@ class KdNiaoGateway extends GatewayAbstract
      * @param $data
      *
      * @return mixed
-     * @throws GatewayErrorException
+     * @throws InvalidArgumentException
      */
     public function notify($data)
     {
-        if (!$data['Success']) {
-            throw new GatewayErrorException($data['Reason'], 500);
+        if (!isset($data['Success'])) {
+            throw new InvalidArgumentException('notify params is invalid', 500);
         }
         return $data["Data"];
     }
@@ -111,16 +108,15 @@ class KdNiaoGateway extends GatewayAbstract
     /**
      * @param $endpoint
      * @param $params
-     * @param $headers
      *
      * @return array
-     * @throws GatewayErrorException
+     * @throws InvalidArgumentException
      */
     public function postMessage($endpoint, $params)
     {
         $result = $this->get(self::ENDPOINT_URL . $endpoint, $params, self::HEADERS);
-        if (!$result['Success']) {
-            throw new GatewayErrorException($result['Reason'], 500, $result);
+        if (!isset($data['Success'])) {
+            throw new InvalidArgumentException($result['Reason'], 500, $result);
         }
 
         return $result;

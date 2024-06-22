@@ -124,7 +124,10 @@ class Express implements ExpressInterface
      */
     public function getCaller()
     {
-        return $this->caller ? : $this->caller = new Caller($this);
+        if (!$this->caller) {
+            $this->caller = new Caller($this);
+        }
+        return $this->caller;
     }
 
     /**
