@@ -40,22 +40,44 @@ class ExpressTest extends TestCase
         return true;
     }
 
+    /**
+     * 腾讯短信测试用例
+     */
+    public function testTrack()
+    {
+        try {
+            $client = $this->getClient();
+            $result = $client->track(
+                [
+                    "logistic_code" => "463631994512677",
+                    "shipper_code"  => "YD",
+                ]
+            );
+            var_dump($result);
+        } catch (NoGatewayAvailableException $exception) {
+            var_dump($exception->getMessage());
+        }
+        return true;
+    }
+
     protected function getClient()
     {
         $container = Mockery::mock(ContainerInterface::class);
 
         $config = new Config(
             [
-                'timeout'  => 5.0,
-                'default'  => [
-                    'gateway' => 'kdniao',
-                ],
-                'gateways' => [
-                    'kdniao' => [
-                        'app_id'  => '', // SDK APP ID
-                        'api_key' => '', // APP KEY
+                "express" => [
+                    'timeout'  => 5.0,
+                    'default'  => [
+                        'gateway' => 'kdniao',
                     ],
-                ],
+                    'gateways' => [
+                        'kdniao' => [
+                            'app_id'  => '1854353', // SDK APP ID
+                            'api_key' => 'e347b83b-54c5-45f8-8953-39ef9ec13891', // APP KEY
+                        ],
+                    ],
+                ]
             ]
         );
 

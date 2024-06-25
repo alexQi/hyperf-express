@@ -26,6 +26,12 @@ class KdNiaoGateway extends GatewayAbstract
 
     public $data_type;
 
+    /**
+     * @param $data
+     *
+     * @return array
+     * @throws InvalidArgumentException
+     */
     public function track($data)
     {
         if (!isset($data["logistic_code"])) {
@@ -41,14 +47,12 @@ class KdNiaoGateway extends GatewayAbstract
         if (isset($data["customer_name"])) {
             $request_data["CustomerName"] = $data["customer_name"];
         }
-        $request_data = json_encode($request_data);
-
         return $this->postMessage(
             'Ebusiness/EbusinessOrderHandle.aspx',
             [
                 'EBusinessID' => $this->config->get('express.gateways.kdniao.app_id'),
                 'RequestType' => "8001",
-                'RequestData' => urlencode($request_data),
+                'RequestData' => urlencode(json_encode($request_data)),
                 'DataType'    => "2",
                 'DataSign'    => $this->generateSign($request_data),
             ]
@@ -77,14 +81,12 @@ class KdNiaoGateway extends GatewayAbstract
         if (isset($data["customer_name"])) {
             $request_data["CustomerName"] = $data["customer_name"];
         }
-        $request_data = json_encode($request_data);
-
         return $this->postMessage(
             'api/dist',
             [
                 'EBusinessID' => $this->config->get('express.gateways.kdniao.app_id'),
                 'RequestType' => "8008",
-                'RequestData' => urlencode($request_data),
+                'RequestData' => urlencode(json_encode($request_data)),
                 'DataType'    => '2',
                 'DataSign'    => $this->generateSign($request_data),
             ]
@@ -115,10 +117,9 @@ class KdNiaoGateway extends GatewayAbstract
     public function postMessage($endpoint, $params)
     {
         $result = $this->get(self::ENDPOINT_URL . $endpoint, $params, self::HEADERS);
-        if (!isset($data['Success'])) {
+        if (!isset($result['Success'])) {
             throw new InvalidArgumentException($result['Reason'], 500, $result);
         }
-
         return $result;
     }
 
@@ -129,8 +130,9 @@ class KdNiaoGateway extends GatewayAbstract
      */
     protected function generateSign($params)
     {
+        $body = str_replace("\\/", "/", Json::encode($params));
         return urlencode(
-            base64_encode(md5(Json::encode($params) . $this->config->get('express.gateways.kdniao.api_key')))
+            base64_encode(md5($body . $this->config->get('express.gateways.kdniao.api_key')))
         );
     }
 }

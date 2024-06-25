@@ -127,7 +127,7 @@ trait HasHttpRequest
     {
         $contentType = $response->getHeaderLine('Content-Type');
         $contents    = $response->getBody()->getContents();
-        if (false !== stripos($contentType, 'json') || stripos($contentType, 'javascript')) {
+        if (false !== stripos($contentType, 'json') || stripos($contentType, 'plain')) {
             return Json::decode($contents);
         } elseif (false !== stripos($contentType, 'xml')) {
             return Xml::toArray($contents);
