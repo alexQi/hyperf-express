@@ -49,8 +49,8 @@ class ExpressTest extends TestCase
             $client = $this->getClient();
             $result = $client->track(
                 [
-                    "logistic_code" => "463631994512677",
-                    "shipper_code"  => "YD",
+                    "logistic_code" => "YT8982473045221",
+                    "shipper_code"  => "YTO",
                 ]
             );
             var_dump($result);

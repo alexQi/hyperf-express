@@ -14,7 +14,7 @@ use Hyperf\Codec\Json;
  * @author  alex
  * @package AlexQiu\Express\Gateway\KdNiaoGateway
  */
-class KdNiaoGateway extends GatewayAbstract
+class KdniaoGateway extends GatewayAbstract
 {
     use HasHttpRequest;
 
